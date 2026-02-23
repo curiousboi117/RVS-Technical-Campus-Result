@@ -545,7 +545,7 @@ function switchPage(from, to) {
 function renderResult(student) {
   const grades = subjects.map(sub => ({
     ...sub,
-    grade: (sub.failForced && student.regNo === '712925243109') ? 'U' : seededGrade(student.regNo, sub.code)
+    grade: sub.failForced ? (student.regNo === '712925243109' ? 'O' : 'U') : seededGrade(student.regNo, sub.code)
   }));
 
   const totalSubjects = grades.length;
