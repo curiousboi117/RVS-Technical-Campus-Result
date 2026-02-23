@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="RVS Technical Campus Coimbatore – Semester I Result Portal 2025-2026. Students can check their results using Register Number and Date of Birth."/>
+<meta name="theme-color" content="#1a2a5e"/>
+<meta property="og:title" content="RVS Technical Campus – Semester I Results"/>
+<meta property="og:description" content="Check your Semester I results – Academic Year 2025-2026"/>
+<meta property="og:image" content="logo.png"/>
+<meta property="og:type" content="website"/>
+<link rel="icon" type="image/png" href="logo.png"/>
+<title>RVS Technical Campus – Semester I Results</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #1a2a5e;
+    --navy-light: #243470;
+    --gold: #c8962b;
+    --gold-light: #f0c050;
+    --red: #c0392b;
+    --green: #1a7a4a;
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --border: #e2e8f0;
+    --shadow: 0 8px 40px rgba(26,42,94,0.10);
+    --radius: 16px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    color: var(--text);
+  }
+
+  /* ── PAGE SYSTEM ── */
+  .page { display: none; opacity: 0; transition: opacity 0.45s ease; }
+  .page.active { display: flex; opacity: 1; }
+
+  /* ── LOGIN PAGE ── */
+  #loginPage {
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: linear-gradient(135deg, #1a2a5e 0%, #243470 50%, #1a3a6e 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  #loginPage::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .login-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow), 0 2px 0 var(--gold);
+    padding: 48px 40px 40px;
+    width: 100%; max-width: 440px;
+    text-align: center;
+    position: relative;
+    animation: slideUp 0.5s ease both;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+
+  .logo-wrap {
+    width: 88px; height: 88px;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    overflow: hidden;
+    margin: 0 auto 20px;
+    background: #eef0f8;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-wrap img { width: 100%; height: 100%; object-fit: cover; }
+  .logo-placeholder {
+    font-size: 11px; color: var(--muted); font-weight: 500; line-height: 1.3;
+  }
+
+  .login-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--navy);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .login-subtitle {
+    font-size: 12px; color: var(--muted); letter-spacing: 0.5px;
+    text-transform: uppercase; margin-bottom: 32px;
+  }
+
+  .divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin-bottom: 28px; border-radius: 2px;
+  }
+
+  label {
+    display: block; text-align: left;
+    font-size: 12px; font-weight: 600;
+    color: var(--navy); letter-spacing: 0.4px;
+    margin-bottom: 6px;
+  }
+  .field { margin-bottom: 18px; }
+  input[type="text"], input[type="date"] {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: #fafbff;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,42,94,0.08); }
+
+  .btn-login {
+    width: 100%;
+    padding: 14px;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 4px;
+  }
+  .btn-login:hover { background: var(--navy-light); }
+  .btn-login:active { transform: scale(0.99); }
+
+  .error-msg {
+    font-size: 13px; color: var(--red);
+    margin-top: 14px; font-weight: 500;
+    min-height: 20px;
+    animation: shake 0.35s ease;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* ── RESULT PAGE ── */
+  #resultPage {
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--bg);
+  }
+
+  .result-header {
+    background: var(--navy);
+    color: #fff;
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  }
+  .header-logo {
+    width: 56px; height: 56px;
+    border-radius: 50%; border: 2px solid var(--gold);
+    overflow: hidden; flex-shrink: 0;
+    background: #eef0f8;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .header-logo img { width: 100%; height: 100%; object-fit: cover; }
+  .header-info h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700;
+  }
+  .header-info p {
+    font-size: 12px; opacity: 0.75; margin-top: 2px; letter-spacing: 0.3px;
+  }
+  .header-actions { margin-left: auto; display: flex; gap: 10px; }
+
+  .btn-sm {
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; border: none;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+  .btn-sm:active { transform: scale(0.97); }
+  .btn-print { background: var(--gold); color: #1a1a1a; }
+  .btn-logout { background: rgba(255,255,255,0.15); color: #fff; }
+  .btn-print:hover { opacity: 0.88; }
+  .btn-logout:hover { background: rgba(255,255,255,0.25); }
+
+  .result-body {
+    max-width: 900px; margin: 36px auto;
+    padding: 0 20px 60px;
+    animation: fadeIn 0.45s ease;
+  }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(16px);} to {opacity:1; transform:translateY(0);} }
+
+  /* Student Info Card */
+  .info-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    border-top: 4px solid var(--navy);
+  }
+  .info-card-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+  }
+  .info-item label {
+    font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.6px; color: var(--muted);
+    margin-bottom: 4px; font-weight: 600;
+  }
+  .info-item .value {
+    font-size: 16px; font-weight: 600; color: var(--navy);
+  }
+  .info-item .value.name { font-family: 'Playfair Display', serif; font-size: 18px; }
+
+  /* Marks Table */
+  .table-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .table-title {
+    background: var(--navy);
+    color: #fff;
+    padding: 14px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead th {
+    background: #f0f3fa;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  thead th:last-child { text-align: center; }
+  tbody td {
+    padding: 13px 16px;
+    font-size: 13.5px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: #fafbff; }
+
+  .subject-code {
+    font-size: 11px; font-weight: 600;
+    color: var(--muted); letter-spacing: 0.3px;
+    display: block; margin-top: 2px;
+  }
+  .grade-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 13px;
+    text-align: center;
+    min-width: 44px;
+  }
+  .grade-pass { background: #e8f5ee; color: var(--green); }
+  .grade-fail { background: #fdecea; color: var(--red); }
+  .row-fail td { background: #fff8f8 !important; }
+  .row-fail td:first-child { border-left: 3px solid var(--red); }
+
+  /* Summary Card */
+  .summary-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .summary-stats { display: flex; gap: 36px; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; font-weight: 700; color: var(--navy);
+    line-height: 1;
+  }
+  .stat .lbl {
+    font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.5px; color: var(--muted); margin-top: 4px; font-weight: 600;
+  }
+  .result-badge {
+    padding: 12px 36px;
+    border-radius: 40px;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: 1px;
+    font-family: 'Playfair Display', serif;
+  }
+  .badge-pass { background: #e8f5ee; color: var(--green); border: 2px solid #a3d9b8; }
+  .badge-fail { background: #fdecea; color: var(--red); border: 2px solid #f5a9a0; }
+
+  .result-note {
+    margin-top: 14px; padding: 10px 16px;
+    background: #fef9ec; border-left: 3px solid var(--gold);
+    border-radius: 6px; font-size: 12.5px; color: #7a5c1e;
+  }
+
+  /* Print Styles */
+  @media print {
+    .result-header .header-actions,
+    .btn-print, .btn-logout { display: none !important; }
+    body { background: white; }
+    .result-header { background: var(--navy) !important; -webkit-print-color-adjust: exact; }
+    .table-title { background: var(--navy) !important; -webkit-print-color-adjust: exact; }
+    .info-card, .table-card, .summary-card { box-shadow: none; border: 1px solid #ddd; }
+    .result-body { margin: 16px auto; }
+  }
+
+  @media (max-width: 600px) {
+    .login-card { padding: 36px 24px 28px; }
+    .info-card-grid { grid-template-columns: 1fr 1fr; }
+    .result-header { flex-wrap: wrap; gap: 12px; }
+    .header-actions { width: 100%; }
+    .summary-card { flex-direction: column; align-items: flex-start; }
+    tbody td, thead th { padding: 10px 10px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════ LOGIN PAGE ════════════════ -->
+<div class="page active" id="loginPage">
+  <div class="login-card">
+
+    <div class="logo-wrap">
+      <img src="logo.png" alt="RVS Logo"
+        />
+      <span class="logo-placeholder" style="display:none">RVS<br>LOGO</span>
+    </div>
+
+    <h1 class="login-title">RVS Technical Campus</h1>
+    <p class="login-subtitle">Semester I Results Portal · 2025–2026</p>
+    <div class="divider"></div>
+
+    <div class="field">
+      <label for="regNo">Register Number</label>
+      <input type="text" id="regNo" placeholder="e.g. 712925243061" maxlength="15"/>
+    </div>
+    <div class="field">
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob"/>
+    </div>
+
+    <button class="btn-login" onclick="doLogin()">View My Result →</button>
+    <p class="error-msg" id="errMsg"></p>
+  </div>
+</div>
+
+<!-- ════════════════ RESULT PAGE ════════════════ -->
+<div class="page" id="resultPage" style="display:none;flex-direction:column;">
+  <div class="result-header">
+    <div class="header-logo">
+      <img src="logo.png" alt="RVS Logo"
+        />
+      <span class="logo-placeholder" style="display:none;font-size:9px;">RVS</span>
+    </div>
+    <div class="header-info">
+      <h1>RVS Technical Campus – Coimbatore</h1>
+      <p>An Autonomous Institution · Approved by AICTE · Affiliated to Anna University · Accredited by NAAC – A Grade</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-sm btn-print" onclick="window.print()">🖨 Print</button>
+      <button class="btn-sm btn-logout" onclick="doLogout()">← Logout</button>
+    </div>
+  </div>
+
+  <div class="result-body" id="resultBody"></div>
+</div>
+
+<script>
+// ─── STUDENT DATA ───────────────────────────────────
+const students = [
+  { regNo:"712925243061", dob:"2008-01-21", name:"MOHAMED FARDEEN S" },
+  { regNo:"712925243062", dob:"2008-02-20", name:"MOWNITHA R" },
+  { regNo:"712925243063", dob:"2007-11-08", name:"MUTHURAJ M" },
+  { regNo:"712925243064", dob:"2008-01-15", name:"MYMOON ASMA J" },
+  { regNo:"712925243065", dob:"2007-05-24", name:"NAGUL R" },
+  { regNo:"712925243066", dob:"2008-02-10", name:"NANTHANA R" },
+  { regNo:"712925243067", dob:"2008-09-07", name:"NAVIN N" },
+  { regNo:"712925243068", dob:"2008-03-22", name:"NAVYA K S" },
+  { regNo:"712925243069", dob:"2007-07-02", name:"NIDHISHYA B" },
+  { regNo:"712925243070", dob:"2007-08-30", name:"P SREENITHI" },
+  { regNo:"712925243071", dob:"2006-12-22", name:"PAVITHRAN S" },
+  { regNo:"712925243072", dob:"2008-09-07", name:"POOJASRI M" },
+  { regNo:"712925243073", dob:"2008-01-31", name:"POORNIMA S" },
+  { regNo:"712925243074", dob:"2007-08-21", name:"PRADEEP P" },
+  { regNo:"712925243075", dob:"2007-12-07", name:"PRASANTH M" },
+  { regNo:"712925243076", dob:"2008-02-24", name:"PRAVEEN DOSS K" },
+  { regNo:"712925243077", dob:"2007-12-02", name:"PRIYADHARSINI M" },
+  { regNo:"712925243078", dob:"2008-04-26", name:"RADHAKRISHNAN G" },
+  { regNo:"712925243079", dob:"2007-05-20", name:"RAJAKARTHIKEYAN V" },
+  { regNo:"712925243080", dob:"2008-06-12", name:"ROHITH A" },
+  { regNo:"712925243081", dob:"2008-04-08", name:"ROHITH P B" },
+  { regNo:"712925243082", dob:"2008-09-21", name:"SABARI PRASANNA G" },
+  { regNo:"712925243083", dob:"2007-12-16", name:"SABARIRAJ R S" },
+  { regNo:"712925243084", dob:"2007-10-09", name:"SAHAYARABIK R" },
+  { regNo:"712925243085", dob:"2007-05-13", name:"SAJIN M" },
+  { regNo:"712925243086", dob:"2007-12-02", name:"SAJVU T" },
+  { regNo:"712925243087", dob:"2006-06-30", name:"SANGEERTHAN S V" },
+  { regNo:"712925243088", dob:"2008-09-17", name:"SANJAI K" },
+  { regNo:"712925243089", dob:"2007-11-19", name:"SANJAY KUMAR A" },
+  { regNo:"712925243090", dob:"2007-11-10", name:"SANJAY M" },
+  { regNo:"712925243091", dob:"2008-04-06", name:"SANJEEV B" },
+  { regNo:"712925243092", dob:"2008-02-09", name:"SARAN RAJ M" },
+  { regNo:"712925243093", dob:"2007-10-03", name:"SATHISH S" },
+  { regNo:"712925243094", dob:"2008-02-11", name:"SAVITHA S" },
+  { regNo:"712925243095", dob:"2007-06-29", name:"SELVAM A" },
+  { regNo:"712925243096", dob:"2008-02-01", name:"SERSHA ROSHINI M" },
+  { regNo:"712925243097", dob:"2007-10-03", name:"SHALINI ROSLIN S" },
+  { regNo:"712925243098", dob:"2008-04-02", name:"SHEIK ABDULLA P M" },
+  { regNo:"712925243099", dob:"2007-11-21", name:"SHRUTHI R" },
+  { regNo:"712925243100", dob:"2008-07-25", name:"SITHESHWAR R" },
+  { regNo:"712925243101", dob:"2008-10-18", name:"SIVASANKARAN M" },
+  { regNo:"712925243102", dob:"2008-04-03", name:"SIVASARAVANAN S" },
+  { regNo:"712925243103", dob:"2008-06-05", name:"SOBEYAA S" },
+  { regNo:"712925243104", dob:"2007-08-08", name:"SRIMUGA R" },
+  { regNo:"712925243105", dob:"2007-12-02", name:"SRINIVASAN M" },
+  { regNo:"712925243106", dob:"2008-02-11", name:"SUDARVENDHAN A" },
+  { regNo:"712925243107", dob:"2007-12-20", name:"SURYAPRASATH B" },
+  { regNo:"712925243108", dob:"2008-09-18", name:"SWAMYA KUMARI V" },
+  { regNo:"712925243109", dob:"2008-06-02", name:"SWATHI R" },
+  { regNo:"712925243110", dob:"2008-05-25", name:"THANVEER IRFAN A" },
+  { regNo:"712925243111", dob:"2007-09-20", name:"THARIKA S" },
+  { regNo:"712925243112", dob:"2007-10-14", name:"THIRUMALAI V" },
+  { regNo:"712925243113", dob:"2007-07-15", name:"UDAYA SURYA S A" },
+  { regNo:"712925243114", dob:"2008-07-01", name:"VALLA RASAN N" },
+  { regNo:"712925243115", dob:"2008-06-08", name:"VASANTH E" },
+  { regNo:"712925243116", dob:"2007-12-20", name:"VASANTHAKUMAR V" },
+  { regNo:"712925243117", dob:"2008-04-24", name:"VASANTHAN K" },
+  { regNo:"712925243118", dob:"2008-02-27", name:"VELMURUGAN R" },
+  { regNo:"712925243119", dob:"2008-01-12", name:"VIGNESH R" },
+  { regNo:"712925243120", dob:"2007-11-25", name:"VIKASH M" },
+  { regNo:"712925243121", dob:"2008-09-21", name:"VILASHINE SP" },
+  { regNo:"712925243122", dob:"2008-02-15", name:"VINO T" },
+  { regNo:"712925243123", dob:"2006-11-01", name:"VISHAL A" },
+  { regNo:"712925243124", dob:"2007-11-17", name:"VISHNU A" }
+];
+
+// ─── SUBJECTS ───────────────────────────────────────
+const subjects = [
+  { name:"Professional English – I",                         code:"24UEN101", failForced:false, type:"theory" },
+  { name:"Matrices and Calculus",                            code:"24UMA102", failForced:false, type:"theory" },
+  { name:"Engineering Physics",                              code:"24UPH103", failForced:false, type:"theory" },
+  { name:"Engineering Chemistry",                            code:"24UCH104", failForced:false, type:"theory" },
+  { name:"Problem Solving and Python Programming",           code:"24UCS105", failForced:true,  type:"theory" },
+  { name:"Heritage of Tamils",                               code:"24UHT106", failForced:false, type:"theory" },
+  { name:"Problem Solving and Python Programming (Lab)",     code:"24CS121",  failForced:false, type:"lab"    },
+  { name:"Physics & Chemistry Laboratory",                   code:"24PC121",  failForced:false, type:"lab"    },
+  { name:"English Laboratory",                               code:"24UEN121", failForced:false, type:"lab"    },
+];
+
+const gradePool = ["O","A+","A","B+","B","C","D"];
+const gradeOrder = {"O":0,"A+":1,"A":2,"B+":3,"B":4,"C":5,"D":6,"U":7};
+
+// Deterministic-ish random per student+subject combo
+function seededGrade(regNo, code) {
+  let hash = 0;
+  const str = regNo + code;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+    hash |= 0;
+  }
+  const idx = Math.abs(hash) % gradePool.length;
+  return gradePool[idx];
+}
+
+// ─── LOGIN ───────────────────────────────────────────
+function doLogin() {
+  const reg = document.getElementById('regNo').value.trim();
+  const dob = document.getElementById('dob').value;
+  const errEl = document.getElementById('errMsg');
+
+  const student = students.find(s => s.regNo === reg && s.dob === dob);
+  if (!student) {
+    errEl.textContent = '✕  Invalid Register Number or Date of Birth.';
+    errEl.style.animation = 'none';
+    void errEl.offsetWidth;
+    errEl.style.animation = 'shake 0.35s ease';
+    return;
+  }
+  errEl.textContent = '';
+  renderResult(student);
+  switchPage('loginPage','resultPage');
+}
+
+// Enter key support
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('loginPage').classList.contains('active')) doLogin();
+});
+
+function doLogout() {
+  switchPage('resultPage','loginPage');
+  document.getElementById('regNo').value = '';
+  document.getElementById('dob').value = '';
+}
+
+function switchPage(from, to) {
+  const fromEl = document.getElementById(from);
+  const toEl   = document.getElementById(to);
+  fromEl.classList.remove('active');
+  fromEl.style.display = 'none';
+  toEl.style.display = to === 'loginPage' ? 'flex' : 'flex';
+  toEl.style.flexDirection = to === 'resultPage' ? 'column' : '';
+  requestAnimationFrame(() => toEl.classList.add('active'));
+}
+
+// ─── RENDER RESULT ───────────────────────────────────
+function renderResult(student) {
+  const grades = subjects.map(sub => ({
+    ...sub,
+    grade: (sub.failForced && student.regNo === '712925243109') ? 'U' : seededGrade(student.regNo, sub.code)
+  }));
+
+  const totalSubjects = grades.length;
+  const passed = grades.filter(g => g.grade !== 'U').length;
+  const failed = totalSubjects - passed;
+  const overallPass = failed === 0;
+
+  let rows = '';
+  grades.forEach((g, i) => {
+    const isFail = g.grade === 'U';
+    rows += `
+      <tr class="${isFail ? 'row-fail' : ''}">
+        <td style="font-weight:500; color:#1a1a2e; width:32px">${i+1}</td>
+        <td>
+          ${g.name}
+          <span class="subject-code">${g.code} · ${g.type === 'lab' ? 'Laboratory' : 'Theory'}</span>
+        </td>
+        <td style="text-align:center">
+          <span class="grade-badge ${isFail ? 'grade-fail' : 'grade-pass'}">${g.grade}</span>
+        </td>
+        <td style="text-align:center; font-size:13px; color:${isFail ? 'var(--red)' : 'var(--green)'}; font-weight:600">
+          ${isFail ? 'FAIL' : 'PASS'}
+        </td>
+      </tr>`;
+  });
+
+  document.getElementById('resultBody').innerHTML = `
+    <div class="info-card">
+      <div class="info-card-grid">
+        <div class="info-item">
+          <label>Student Name</label>
+          <div class="value name">${student.name}</div>
+        </div>
+        <div class="info-item">
+          <label>Register Number</label>
+          <div class="value">${student.regNo}</div>
+        </div>
+        <div class="info-item">
+          <label>Semester / Academic Year</label>
+          <div class="value">Semester I &nbsp;·&nbsp; 2025–2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <div class="table-title">📋 Subject-wise Result</div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Subject Name &amp; Code</th>
+            <th style="text-align:center">Grade</th>
+            <th style="text-align:center">Status</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-stats">
+        <div class="stat"><div class="num">${totalSubjects}</div><div class="lbl">Total Subjects</div></div>
+        <div class="stat"><div class="num" style="color:var(--green)">${passed}</div><div class="lbl">Passed</div></div>
+        <div class="stat"><div class="num" style="color:var(--red)">${failed}</div><div class="lbl">Failed</div></div>
+      </div>
+      <div>
+        <div class="result-badge ${overallPass ? 'badge-pass' : 'badge-fail'}">
+          ${overallPass ? '✓ PASS' : '✗ FAIL'}
+        </div>
+      </div>
+    </div>
+
+    ${!overallPass ? `<div class="result-note" style="margin-top:14px">
+      ⚠️ You have failed in <strong>${failed}</strong> subject(s). Please contact the Examination Cell for re-evaluation or supplementary examination details.
+    </div>` : ''}
+  `;
+}
+</script>
+</body>
+</html>
