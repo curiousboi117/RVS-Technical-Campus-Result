@@ -541,12 +541,59 @@ function switchPage(from, to) {
   requestAnimationFrame(() => toEl.classList.add('active'));
 }
 
+// ─── SPECIAL STUDENT GROUPS ──────────────────────────
+const SWATHI_REG = '712925243109';
+
+// These students pass all subjects (no forced fails)
+const ALL_PASS_REGS = new Set([
+  '712925243070', // P SREENITHI
+  '712925243072', // POOJASRI M
+  '712925243073', // POORNIMA S
+  '712925243087', // SANGEERTHAN S V
+  '712925243089', // SANJAY KUMAR A
+  '712925243100', // SITHESHWAR R
+  '712925243103', // SOBEYAA S
+  '712925243121', // VILASHINE SP
+  '712925243113', // UDAYA SURYA S A
+  '712925243114', // VALLA RASAN N
+  '712925243120', // VIKASH M
+]);
+
+// Pick a deterministic "random" extra fail subject index for failing students
+// excludes index 4 (Python 24UCS105 - already forced fail)
+function extraFailSubjectIndex(regNo) {
+  let hash = 0;
+  for (let i = 0; i < regNo.length; i++) {
+    hash = ((hash << 5) - hash) + regNo.charCodeAt(i);
+    hash |= 0;
+  }
+  const pool = [0, 1, 2, 3, 5, 6, 7, 8];
+  return pool[Math.abs(hash) % pool.length];
+}
+
 // ─── RENDER RESULT ───────────────────────────────────
 function renderResult(student) {
-  const grades = subjects.map(sub => ({
-    ...sub,
-    grade: sub.failForced ? (student.regNo === '712925243109' ? 'O' : 'U') : seededGrade(student.regNo, sub.code)
-  }));
+  const isSwathi   = student.regNo === SWATHI_REG;
+  const isAllPass  = ALL_PASS_REGS.has(student.regNo);
+  const isFailing  = !isSwathi && !isAllPass;
+
+  const extraFailIdx = isFailing ? extraFailSubjectIndex(student.regNo) : -1;
+
+  const grades = subjects.map((sub, idx) => {
+    let grade;
+    if (isSwathi) {
+      grade = sub.failForced ? 'O' : seededGrade(student.regNo, sub.code);
+    } else if (isAllPass) {
+      grade = seededGrade(student.regNo, sub.code);
+    } else {
+      if (sub.failForced || idx === extraFailIdx) {
+        grade = 'U';
+      } else {
+        grade = seededGrade(student.regNo, sub.code);
+      }
+    }
+    return { ...sub, grade };
+  });
 
   const totalSubjects = grades.length;
   const passed = grades.filter(g => g.grade !== 'U').length;
